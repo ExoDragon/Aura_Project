@@ -22,13 +22,12 @@ void AAuraPlayerController::PlayerTick(float DeltaTime)
 void AAuraPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-
 	check(AuraInputMappingContextContext);
 
-	UEnhancedInputLocalPlayerSubsystem* SubSystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer());
-	check(SubSystem);
-
-	SubSystem->AddMappingContext(AuraInputMappingContextContext, 0);
+	if (UEnhancedInputLocalPlayerSubsystem* SubSystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer()))
+	{
+		SubSystem->AddMappingContext(AuraInputMappingContextContext, 0);
+	}
 
 	bShowMouseCursor = true;
 	DefaultMouseCursor = EMouseCursor::Default;
