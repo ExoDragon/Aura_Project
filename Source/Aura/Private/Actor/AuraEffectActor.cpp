@@ -1,4 +1,4 @@
-// Copyrigth Exodragon
+// Copyright ExoDragon
 
 
 #include "Actor/AuraEffectActor.h"
