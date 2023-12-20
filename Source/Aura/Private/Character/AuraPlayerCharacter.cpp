@@ -38,6 +38,14 @@ void AAuraPlayerCharacter::OnRep_PlayerState()
 	InitAbilityActorInfo();
 }
 
+int32 AAuraPlayerCharacter::GetPlayerLevel()
+{
+	const AAuraPlayerState* AuraPlayerState = GetPlayerState<AAuraPlayerState>();
+	check(AuraPlayerState);
+	
+	return AuraPlayerState->GetPlayerLevel();
+}
+
 void AAuraPlayerCharacter::InitAbilityActorInfo()
 {
 	AAuraPlayerState* AuraPlayerState = GetPlayerState<AAuraPlayerState>();
@@ -56,5 +64,5 @@ void AAuraPlayerCharacter::InitAbilityActorInfo()
 		}
 	}
 
-	InitializePrimaryAttributes();
+	InitializeDefaultAttributes();
 }

@@ -46,3 +46,8 @@ void AAuraEnemyCharacter::UnHighlightActor()
 	
 	WeaponComponent->SetRenderCustomDepth(false);
 }
+
+int32 AAuraEnemyCharacter::GetPlayerLevel()
+{
+	return Level;
+}
