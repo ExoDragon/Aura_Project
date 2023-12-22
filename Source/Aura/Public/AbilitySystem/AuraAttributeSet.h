@@ -54,6 +54,9 @@ struct FEffectProperties
 	FGameplayEffectContextHandle EffectContextHandle;
 };
 
+template<class T>
+using TStaticFuncPtr = typename TBaseStaticDelegateInstance<T, FDefaultDelegateUserPolicy>::FFuncPtr;
+
 /**
  * 
  */
@@ -65,6 +68,8 @@ class AURA_API UAuraAttributeSet : public UAttributeSet
 public:
 	UAuraAttributeSet();
 
+	TMap<FGameplayTag, TStaticFuncPtr<FGameplayAttribute()>> TagsToAttributes;
+	
 	/*
 	 * Primary Attributes
 	 */

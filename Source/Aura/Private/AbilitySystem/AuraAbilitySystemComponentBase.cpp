@@ -2,6 +2,7 @@
 
 
 #include "AbilitySystem/AuraAbilitySystemComponentBase.h"
+#include "AuraGameplayTags.h"
 
 void UAuraAbilitySystemComponentBase::AbilityActorInfoSet()
 {
