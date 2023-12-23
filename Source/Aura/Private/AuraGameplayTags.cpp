@@ -23,4 +23,11 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 	Instance.Attributes_Secondary_Mana_Regeneration = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attributes.Secondary.Mana_Regeneration"), FString(""));
 	Instance.Attributes_Secondary_Max_Health = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attributes.Secondary.Max_Health"), FString(""));
 	Instance.Attributes_Secondary_Max_Mana = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attributes.Secondary.Max_Mana"), FString(""));
+
+	Instance.InputTag_LMB = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("InputTag.LMB"), FString(""));
+	Instance.InputTag_RMB = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("InputTag.RMB"), FString(""));
+	Instance.InputTag_1 = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("InputTag.1"), FString(""));
+	Instance.InputTag_2 = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("InputTag.2"), FString(""));
+	Instance.InputTag_3 = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("InputTag.3"), FString(""));
+	Instance.InputTag_4 = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("InputTag.4"), FString(""));
 }
