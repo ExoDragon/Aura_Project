@@ -15,7 +15,7 @@ const UInputAction* UAuraInputConfig::FindAbilityInputActionForTag(const FGamepl
 
 	if (bLogNotFound)
 	{
-		UE_LOG(LogTemp, Error, TEXT("Can't find InputAction for AttributeStag [%s] on AttributeInfo [%s]"), *InputTag.ToString(), *GetNameSafe(this));
+		UE_LOG(LogTemp, Error, TEXT("Can't find InputAction for AttributeTag [%s] on AttributeInfo [%s]"), *InputTag.ToString(), *GetNameSafe(this));
 	}
 	
 	return nullptr;
