@@ -21,15 +21,19 @@ class AURA_API AAuraCharacterBase : public ACharacter, public IAbilitySystemInte
 public:
 	AAuraCharacterBase();
 
+	virtual FVector GetCombatSocketLocation() override;
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override { return AbilitySystemComponent; };
 	UAttributeSet* GetAttributeSet() const { return AttributeSet; };
 
 protected:
 	virtual void BeginPlay() override;
-
+	
 	UPROPERTY(EditAnywhere, Category="Combat")
 	TObjectPtr<USkeletalMeshComponent> WeaponComponent;
 
+	UPROPERTY(EditAnywhere, Category="Combat")
+	FName WeaponTipSocketName;
+	
 	UPROPERTY()
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
 

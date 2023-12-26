@@ -14,6 +14,12 @@ AAuraCharacterBase::AAuraCharacterBase()
 	WeaponComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
 
+FVector AAuraCharacterBase::GetCombatSocketLocation()
+{
+	check(WeaponComponent);
+	return WeaponComponent->GetSocketLocation(WeaponTipSocketName);
+}
+
 void AAuraCharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
