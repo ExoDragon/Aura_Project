@@ -37,6 +37,9 @@ private:
 	UPROPERTY(EditAnywhere, Category="Input")
 	TObjectPtr<UInputAction> MoveAction;
 
+	UPROPERTY(EditAnywhere, Category="Input")
+	TObjectPtr<UInputAction> ShiftAction;
+
 	UPROPERTY(EditDefaultsOnly, Category="Input")
 	TObjectPtr<UAuraInputConfig> InputConfig;
 
@@ -49,6 +52,8 @@ private:
 	bool bAutoRunning = false;
 	bool bTargeting = false;
 
+	bool bShiftKeyDown = false;
+
 	FHitResult CursorHit;
 
 	UPROPERTY(VisibleAnywhere, Category="Movement")
@@ -58,6 +63,8 @@ private:
 	float AutoRunAcceptanceRadius = 50.f;
 
 	void Move(const FInputActionValue& InputActionValue);
+	void ShiftPressed() { bShiftKeyDown = true; }
+	void ShiftReleased() { bShiftKeyDown = false; }
 	void CursorTrace();
 
 	void AbilityInputTagPressed(FGameplayTag InputTag);
