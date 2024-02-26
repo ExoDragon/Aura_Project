@@ -6,6 +6,7 @@
 #include "Engine/DataAsset.h"
 #include "AuraCharacterClassInfo.generated.h"
 
+class UGameplayAbility;
 class UGameplayEffect;
 
 UENUM(BlueprintType)
@@ -26,7 +27,7 @@ struct FCharacterClassDefaultInfo
 };
 
 /**
- * 
+ *  
  */
 UCLASS()
 class AURA_API UAuraCharacterClassInfo : public UDataAsset
@@ -43,6 +44,12 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, Category="Common Class Defaults")
 	TSubclassOf<UGameplayEffect> VitalAttributes;
+
+	UPROPERTY(EditDefaultsOnly, Category="Common Class Defaults")
+	TArray<TSubclassOf<UGameplayAbility>> CommonAbilities;
+
+	UPROPERTY(EditDefaultsOnly, Category="common Class Defaults|Damage")
+	TObjectPtr<UCurveTable> DamageCalculationCoefficients;
 	
 	FCharacterClassDefaultInfo GetClassDefaultInfo(ECharacterClass CharacterClass);
 };

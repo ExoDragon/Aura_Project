@@ -1,4 +1,4 @@
-// Copyrigth Exodragon
+// Copyright ExoDragon
 
 
 #include "Character/AuraEnemyCharacter.h"
@@ -9,6 +9,8 @@
 #include "Aura/Aura.h"
 #include "Components/WidgetComponent.h"
 #include "UI/Widget/AuraUserWidget.h"
+#include "AuraGameplayTags.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 AAuraEnemyCharacter::AAuraEnemyCharacter()
 {
@@ -27,8 +29,12 @@ AAuraEnemyCharacter::AAuraEnemyCharacter()
 void AAuraEnemyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	GetCharacterMovement()->MaxWalkSpeed = BaseWalkSpeed;
+	
 	InitAbilityActorInfo();
 	InitializeDefaultAttributes();
+
+	UAuraAbilitySystemLibrary::GiveStartupAbilities(this, AbilitySystemComponent);
 	
 	if (UAuraUserWidget* AuraUserWidget = Cast<UAuraUserWidget>(HealthBar->GetUserWidgetObject()))
 	{
@@ -49,9 +55,18 @@ void AAuraEnemyCharacter::BeginPlay()
 				OnMaxHealthChanged.Broadcast(Data.NewValue);
 			});
 
+		AbilitySystemComponent->RegisterGameplayTagEvent(FAuraGameplayTags::Get().Effects_HitReact, EGameplayTagEventType::NewOrRemoved)
+			.AddUObject(this, &AAuraEnemyCharacter::HitReactTagChanged);
+
 		OnHealthChanged.Broadcast(AuraAttributeSet->GetHealth());
 		OnMaxHealthChanged.Broadcast(AuraAttributeSet->GetMaxHealth());
 	}
+}
+
+void AAuraEnemyCharacter::HitReactTagChanged(const FGameplayTag CallbackTag, int32 NewCount)
+{
+	bHitReacting = NewCount > 0;
+	GetCharacterMovement()->MaxWalkSpeed = bHitReacting ? 0.f : BaseWalkSpeed;
 }
 
 void AAuraEnemyCharacter::InitAbilityActorInfo()
@@ -86,4 +101,10 @@ void AAuraEnemyCharacter::UnHighlightActor()
 int32 AAuraEnemyCharacter::GetPlayerLevel()
 {
 	return Level;
+}
+
+void AAuraEnemyCharacter::Die()
+{
+	SetLifeSpan(LifeSpan);
+	Super::Die();
 }

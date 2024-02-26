@@ -1,4 +1,4 @@
-// Copyrigth Exodragon
+// Copyright ExoDragon
 
 
 #include "Character/AuraCharacterBase.h"
@@ -23,15 +23,41 @@ AAuraCharacterBase::AAuraCharacterBase()
 	WeaponComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
 
+void AAuraCharacterBase::BeginPlay()
+{
+	Super::BeginPlay();
+}
+
 FVector AAuraCharacterBase::GetCombatSocketLocation()
 {
 	check(WeaponComponent);
 	return WeaponComponent->GetSocketLocation(WeaponTipSocketName);
 }
 
-void AAuraCharacterBase::BeginPlay()
+UAnimMontage* AAuraCharacterBase::GetHitReactMontage_Implementation()
 {
-	Super::BeginPlay();
+	return HitReactMontage;
+}
+
+void AAuraCharacterBase::Die()
+{
+	WeaponComponent->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepWorld, true));
+	MulticastHandleDeath();
+}
+
+void AAuraCharacterBase::MulticastHandleDeath_Implementation()
+{
+	WeaponComponent->SetSimulatePhysics(true);
+	WeaponComponent->SetEnableGravity(true);
+	WeaponComponent->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
+
+	GetMesh()->SetSimulatePhysics(true);
+	GetMesh()->SetEnableGravity(true);
+	GetMesh()->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
+	GetMesh()->SetCollisionResponseToChannel(ECC_WorldStatic, ECR_Block);
+
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	Dissolve();
 }
 
 void AAuraCharacterBase::ApplyEffectToSelf(const TSubclassOf<UGameplayEffect> GameplayEffect, const float Level) const
@@ -59,6 +85,23 @@ void AAuraCharacterBase::AddCharacterAbilities() const
 	if (!HasAuthority()) return;
 
 	AuraAbilitySystemComponentBase->AddCharacterAbilities(StartupAbilities);
+}
+
+void AAuraCharacterBase::Dissolve()
+{
+	if (IsValid(DissolveMaterialInstance))
+	{
+		UMaterialInstanceDynamic* DynamicMatInst = UMaterialInstanceDynamic::Create(DissolveMaterialInstance, this);
+		GetMesh()->SetMaterial(0, DynamicMatInst);
+		StartDissolveTimeline(DynamicMatInst);
+	}
+
+	if (IsValid(WeaponDissolveMaterialInstance))
+	{
+		UMaterialInstanceDynamic* DynamicMatInst = UMaterialInstanceDynamic::Create(WeaponDissolveMaterialInstance, this);
+		WeaponComponent->SetMaterial(0, DynamicMatInst);
+		StartDissolveWeaponTimeline(DynamicMatInst);
+	}
 }
 
 void AAuraCharacterBase::InitAbilityActorInfo()
