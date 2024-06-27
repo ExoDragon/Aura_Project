@@ -21,7 +21,7 @@ class AURA_API AAuraCharacterBase : public ACharacter, public IAbilitySystemInte
 
 public:
 	AAuraCharacterBase();
-
+ 
 	virtual FVector GetCombatSocketLocation() override;
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override { return AbilitySystemComponent; };
 	virtual UAnimMontage* GetHitReactMontage_Implementation() override;

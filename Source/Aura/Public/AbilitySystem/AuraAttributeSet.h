@@ -40,7 +40,7 @@ struct FEffectProperties
 {
 	GENERATED_BODY()
 
-	FEffectProperties() {};
+	FEffectProperties() {}
 	FEffectProperties(FEffectPropertiesData Source, FEffectPropertiesData Target)
 		: Source(Source), Target(Target) {}
 
@@ -209,5 +209,5 @@ public:
 
 private:
 	void SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Props) const;
-	void ShowFloatingText(const FEffectProperties& Props, float Damage) const;
+	void ShowFloatingText(const FEffectProperties& Props, float Damage, bool bBlockedHit, bool bCriticalHit) const;
 };
