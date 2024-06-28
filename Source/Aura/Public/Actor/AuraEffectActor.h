@@ -58,7 +58,10 @@ protected:
 	EEffectRemovalPolicy InfiniteRemovalPolicy = EEffectRemovalPolicy::DoNotRemove;
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category="Effects")
-	bool bDestroyOnEffectRemoval = false;
+	bool bDestroyOnEffectApplication = false;
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category="Effects")
+	bool bApplyEffectsToEnemies = false;
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category="Effects")
 	float ActorLevel = 1.f;
