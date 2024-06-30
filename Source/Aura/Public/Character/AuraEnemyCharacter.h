@@ -35,7 +35,10 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category="Combat")
 	bool bHitReacting = false;
 
-	UPROPERTY(BlueprintReadOnly, Category="Movement")
+	UPROPERTY(BlueprintReadWrite, Category="Combat")
+	TObjectPtr<AActor> CombatTarget;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Movement")
 	float BaseWalkSpeed = 250.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Movement")
@@ -45,6 +48,8 @@ public:
 	virtual void UnHighlightActor() override;
 	virtual int32 GetPlayerLevel() override;
 	virtual void Die() override;
+	virtual FORCEINLINE void SetCombatTarget_Implementation(AActor* InCombatTarget) override { CombatTarget = InCombatTarget; };
+	virtual FORCEINLINE AActor* GetCombatTarget_Implementation() const override { return CombatTarget; }
 
 	void HitReactTagChanged(const FGameplayTag CallbackTag, int32 NewCount);
 

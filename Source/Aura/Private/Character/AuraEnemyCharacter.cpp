@@ -59,7 +59,7 @@ void AAuraEnemyCharacter::BeginPlay()
 	if (HasAuthority())
 	{
 		InitializeDefaultAttributes();
-		UAuraAbilitySystemLibrary::GiveStartupAbilities(this, AbilitySystemComponent);
+		UAuraAbilitySystemLibrary::GiveStartupAbilities(this, AbilitySystemComponent, CharacterClass);
 	}
 	
 	if (UAuraUserWidget* AuraUserWidget = Cast<UAuraUserWidget>(HealthBar->GetUserWidgetObject()))
@@ -93,7 +93,10 @@ void AAuraEnemyCharacter::HitReactTagChanged(const FGameplayTag CallbackTag, int
 {
 	bHitReacting = NewCount > 0;
 	GetCharacterMovement()->MaxWalkSpeed = bHitReacting ? 0.f : BaseWalkSpeed;
-	AuraAIController->GetBlackboardComponent()->SetValueAsBool(FName("bHitReacting"), bHitReacting);
+	if (AuraAIController && AuraAIController->GetBlackboardComponent())
+		AuraAIController->GetBlackboardComponent()->SetValueAsBool(FName("bHitReacting"), bHitReacting);
+	
+	
 }
 
 void AAuraEnemyCharacter::InitAbilityActorInfo()
